@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas de Profesores</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Mis Reservas de Profesores</h1>
+
+        {% if citas %}
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr>
+                        <th class="border-b px-4 py-2 text-left">Estudiante</th>
+                        <th class="border-b px-4 py-2 text-left">Fecha</th>
+                        <th class="border-b px-4 py-2 text-left">Hora</th>
+                        <th class="border-b px-4 py-2 text-left">Tipo de Clase</th>
+                        <th class="border-b px-4 py-2 text-left">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cita in citas %}
+                        <tr>
+                            <td class="px-4 py-2">{{ cita.usuario.username }}</td>
+                            <td class="px-4 py-2">{{ cita.fecha_reserva }}</td>
+                            <td class="px-4 py-2">{{ cita.hora_reserva }}</td>
+                            <td class="px-4 py-2">{{ cita.tipo_clase }}</td>
+                            <td class="px-4 py-2">
+                                <span class="text-{{ 'green' if cita.estado == 'confirmada' else 'red' }}-500">{{ cita.estado }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-gray-600">No tienes reservas de estudiantes.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

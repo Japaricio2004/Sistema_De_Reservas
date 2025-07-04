@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistema de Reservas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-inicio {
+            background-image: url("{{ url_for('static', filename='images/inicio.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .ripple-btn {
+            position: relative;
+            overflow: hidden;
+            background-color: transparent;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ripple-btn::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease, opacity 0.4s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ripple-btn:hover::before {
+            width: 300%;
+            height: 300%;
+            opacity: 1;
+        }
+
+        .ripple-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .shimmer-text {
+            background-image: linear-gradient(to right, #ffffff, #cccccc, #ffffff);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 1.2s ease-out;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-inicio bg-cover bg-center bg-no-repeat relative">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="relative z-10 flex flex-col justify-center items-center text-center min-h-screen px-4 text-white animate-fade-in">
+        <header class="mb-10 max-w-xl w-full">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 drop-shadow-[2px_2px_0_rgba(0,0,0,0.6)] animate-float shimmer-text">
+                ReservaFácil
+            </h1>
+            <p class="text-lg mt-2 text-gray-200">Tu negocio, tus horarios, tus clientes. Sin llamadas.</p>
+        </header>
+        <div class="flex flex-col space-y-4 w-full max-w-xs">
+            <!-- Botón para ingresar como negocio -->
+            <a href="{{ url_for('login') }}" class="ripple-btn border border-blue-400 text-white rounded-lg py-3 flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.347 0 4.548.607 6.498 1.663M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Ingresar como negocio
+            </a>
+            <!-- Botón para crear cuenta -->
+            <a href="{{ url_for('register') }}" class="ripple-btn border border-green-400 text-white rounded-lg py-3 flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Crear cuenta
+            </a>
+        </div>
+    </div>
+</body>
+</html>

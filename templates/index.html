@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Panel del Negocio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #fff;
+        min-height: 100vh;
+        color: #1f2937;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .fadeInUp { animation: fadeInUp 0.8s ease-out both; }
+    .slideIn { animation: slideIn 0.6s ease-out both; }
+    
+    .top-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        backdrop-filter: blur(10px);
+        background: rgba(255,255,255,0.95);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        z-index: 50;
+        padding: 1.5rem 0;
+    }
+    
+    .glass-card {
+        background: rgba(255,255,255,0.9);
+        border-radius: 2rem;
+        border: 2px solid rgba(59,130,246,0.1);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(.175,.885,.32,1.275);
+        position: relative;
+        z-index: 5;
+        overflow: hidden;
+        animation-delay: var(--delay, 0s);
+    }
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg,transparent,rgba(59,130,246,0.5),transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .glass-card:hover::before { opacity: 1; }
+    .glass-card:hover {
+        transform: translateY(-12px) scale(1.03);
+        box-shadow: 0 25px 50px rgba(59,130,246,0.15);
+        background: rgba(255,255,255,0.95);
+        border-color: rgba(59,130,246,0.3);
+    }
+    .gradient-icon {
+        width: 4rem; height: 4rem; margin-bottom: 1.5rem;
+        stroke: #3b82f6; fill: none; stroke-width: 1.8;
+        filter: drop-shadow(0 2px 4px rgba(59,130,246,0.2));
+        transition: all 0.3s ease;
+    }
+    .glass-card:hover .gradient-icon {
+        stroke: #2563eb;
+        filter: drop-shadow(0 4px 8px rgba(59,130,246,0.4));
+        animation: pulse 2s infinite;
+    }
+    .logout-btn {
+        background: linear-gradient(135deg,#ef4444,#dc2626);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        cursor: pointer;
+    }
+    .logout-btn::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+        transition: left 0.5s ease;
+    }
+    .logout-btn:hover::before { left: 100%; }
+    .logout-btn:hover {
+        background: linear-gradient(135deg,#dc2626,#b91c1c);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(239,68,68,0.3);
+    }
+    .title-gradient {
+        background: linear-gradient(135deg,#1f2937,#3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .card-title { color: #1f2937; }
+    .card-description { color: #6b7280; }
+    
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        color: white;
+        font-family: Inter, sans-serif;
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid transparent;
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+    
+    @media (max-width:640px) {
+        .glass-card { padding: 2rem 1.5rem; }
+        .gradient-icon { width: 3rem; height: 3rem; }
+    }
+</style>
+</head>
+<body>
+
+<header class="top-nav fadeInUp sticky top-0 z-50 py-6">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+        <div class="slideIn">
+            <h1 class="text-3xl font-bold tracking-wide text-gray-800">Panel de Administración</h1>
+            <p class="text-sm text-gray-600 mt-1">Gestiona tu negocio de forma eficiente</p>
+        </div>
+        <div class="flex items-center gap-4">
+    <a href="{{ url_for('logout') }}" class="logout-btn relative px-6 py-3 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+        <span class="relative z-10 flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16,17 21,12 16,7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Cerrar sesión
+        </span>
+    </a>
+</div>
+    </div>
+</header>
+
+<main class="fadeInUp pt-32 px-4 pb-20">
+    <div class="text-center mb-16">
+        <h2 class="text-5xl font-bold title-gradient mb-4 tracking-tight">Bienvenido, {{ current_user.username }}</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">Accede a todas las herramientas para administrar tu negocio</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+
+        <a href="citas_profesor.html" class="glass-card flex flex-col items-center text-center px-8 py-12 group" style="--delay: 0.1s">
+            <svg class="gradient-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <h3 class="text-2xl font-semibold card-title mb-3">Ver Citas</h3>
+            <p class="card-description text-center leading-relaxed">Consulta y gestiona todas las reservas realizadas por tus clientes de manera organizada</p>
+            <div class="mt-4 flex items-center text-gray-500 text-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2">
+                    <polyline points="9,18 15,12 9,6"/>
+                </svg>
+                Administrar citas
+            </div>
+        </a>
+
+        <a href="editar_servicios.html" class="glass-card flex flex-col items-center text-center px-8 py-12 group" style="--delay: 0.2s">
+            <svg class="gradient-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 11H5m14-4H3m12 8H7m8 4H9" />
+            </svg>
+            <h3 class="text-2xl font-semibold card-title mb-3">Servicios</h3>
+            <p class="card-description text-center leading-relaxed">Agrega, edita o elimina los servicios que ofreces a tus clientes</p>
+            <div class="mt-4 flex items-center text-gray-500 text-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2">
+                    <polyline points="9,18 15,12 9,6"/>
+                </svg>
+                Gestionar servicios
+            </div>
+        </a>
+        <a href="perfil.html" class="glass-card flex flex-col items-center text-center px-8 py-12 group" style="--delay: 0.4s">
+            <svg class="gradient-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" />
+            </svg>
+            <h3 class="text-2xl font-semibold card-title mb-3">Mi perfil</h3>
+            <p class="card-description text-center leading-relaxed">Actualiza la información y configuración de tu negocio</p>
+            <div class="mt-4 flex items-center text-gray-500 text-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-2">
+                    <polyline points="9,18 15,12 9,6"/>
+                </svg>
+                Editar perfil
+            </div>
+        </a>
+    </div>
+</main>
+<script>
+function clearSessionData() {
+    try {
+        if (typeof(Storage) !== "undefined" && sessionStorage) {
+            sessionStorage.clear();
+        }
+    } catch (error) {
+        console.warn('Error al limpiar datos de sesión:', error);
+    }
+}
+function showLoadingOverlay(message) {
+    try {
+        const existingOverlay = document.getElementById('loadingOverlay');
+        if (existingOverlay) {
+            existingOverlay.remove();
+        }
+        
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loadingOverlay';
+        loadingDiv.className = 'loading-overlay';
+        loadingDiv.innerHTML = `
+            <div style="text-align: center;">
+                <div class="spinner"></div>
+                <p style="font-size: 18px; margin: 0;">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loadingDiv);
+    } catch (error) {
+        console.error('Error al mostrar loading:', error);
+    }
+}
+function checkAuthentication() {
+    try {
+        console.log('Verificando autenticación...');
+    } catch (error) {
+        console.warn('Error al verificar autenticación:', error);
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        checkAuthentication();
+        
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('fadeInUp');
+        });
+    } catch (error) {
+        console.error('Error en DOMContentLoaded:', error);
+    }
+});
+document.addEventListener('keydown', function(e) {
+    try {
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.remove();
+            }
+        }
+    } catch (error) {
+        console.error('Error en keydown:', error);
+    }
+});
+window.addEventListener('error', function(e) {
+    console.error('Error global:', e.error);
+});
+</script>
+</body>
+</html>

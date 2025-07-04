@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Profesor Ricardo Lopez - Reservar Clase</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes fade-in-up {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slide-in-left {
+    from { 
+        opacity: 0; 
+        transform: translateX(-30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); }
+}
+
+.hero-gradient {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #8b5cf6 100%);
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease-in-out infinite;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+.fade-in {
+    animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.slide-in {
+    animation: slide-in-left 0.8s ease-out forwards;
+}
+
+.float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.icon-bounce {
+    transition: transform 0.3s ease;
+}
+
+.icon-bounce:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.form-focus {
+    transition: all 0.3s ease;
+}
+
+.form-focus:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
+}
+
+.button-gradient {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    background-size: 200% 200%;
+    transition: all 0.3s ease;
+}
+
+.button-gradient:hover {
+    background-position: 100% 0;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px -5px rgba(59, 130, 246, 0.4);
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.1;
+    animation: float 8s ease-in-out infinite;
+}
+
+.shape:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape:nth-child(2) {
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.shape:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+/* Nuevos estilos para mejorar la legibilidad */
+.profile-title {
+    color: #1e293b; /* Gris oscuro en lugar de blanco */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-subtitle {
+    color: #334155; /* Gris medio */
+}
+
+.profile-description {
+    color: #475569; /* Gris para el texto descriptivo */
+}
+
+.back-button {
+    background: rgba(30, 58, 138, 0.9);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(30, 58, 138, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+}
+
+.status-badge {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+</style>
+</head>
+<body class="min-h-screen hero-gradient relative overflow-x-hidden">
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="shape w-32 h-32 bg-blue-400 rounded-full blur-xl"></div>
+        <div class="shape w-24 h-24 bg-purple-400 rounded-full blur-xl"></div>
+        <div class="shape w-20 h-20 bg-indigo-400 rounded-full blur-xl"></div>
+    </div>
+    <div class="max-w-6xl mx-auto py-8 px-4 relative z-10">
+        <div class="glass-effect rounded-3xl shadow-2xl p-8 mb-8 card-hover fade-in">
+            <div class="flex flex-col lg:flex-row gap-8 items-center">
+                <div class="relative">
+                    <img src="{{ url_for('static', filename='images/profesor.jpeg') }}" alt="Profesor Ricardo López" class="w-40 h-40 rounded-full object-cover shadow-2xl pulse-glow">
+                    <div class="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white flex items-center justify-center">
+                        <span class="text-white text-xs">✓</span>
+                    </div>
+                </div>
+                <div class="text-center lg:text-left flex-1">
+                    <h1 class="hero-title text-4xl lg:text-5xl font-bold profile-title mb-3">
+                        Prof. Ricardo López
+                    </h1>
+                    <p class="text-xl profile-subtitle mb-4">
+                        🎓 Especialista en Matemática y Física
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-4">
+                        <span class="bg-blue-600/90 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm">
+                            📍 Jr. Conocimiento 789, Lima
+                        </span>
+                        <span class="bg-green-600/90 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm">
+                            ⭐ 4.9/5 Rating
+                        </span>
+                    </div>
+                    <p class="profile-description text-lg leading-relaxed max-w-2xl">
+                        Transformo las matemáticas y física en experiencias de aprendizaje memorable. 
+                        Con más de 10 años de experiencia ayudando estudiantes a alcanzar sus metas académicas.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="glass-effect rounded-2xl shadow-xl p-6 card-hover slide-in" style="animation-delay: 0.1s">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4 icon-bounce">
+                        <span class="text-white text-2xl">📚</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gradient">Servicios</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p class="text-gray-700">Clases de nivel secundaria y preuniversitario</p>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p class="text-gray-700">Preparación intensiva para exámenes</p>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p class="text-gray-700">Modalidad online y presencial</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-effect rounded-2xl shadow-xl p-6 card-hover slide-in" style="animation-delay: 0.2s">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-4 icon-bounce">
+                        <span class="text-white text-2xl">🕒</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gradient">Horarios</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl">
+                        <p class="font-semibold text-gray-800">Lunes a Viernes</p>
+                        <p class="text-gray-600">3:00 pm – 8:00 pm</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-xl">
+                        <p class="font-semibold text-gray-800">Sábados</p>
+                        <p class="text-gray-600">10:00 am – 2:00 pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-effect rounded-2xl shadow-xl p-6 card-hover slide-in" style="animation-delay: 0.3s">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4 icon-bounce">
+                        <span class="text-white text-2xl">📈</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gradient">Estadísticas</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600">500+</div>
+                        <p class="text-gray-600">Estudiantes</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600">98%</div>
+                        <p class="text-gray-600">Éxito en exámenes</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600">10+</div>
+                        <p class="text-gray-600">Años experiencia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="glass-effect rounded-3xl shadow-2xl p-8 mt-8 card-hover fade-in" style="animation-delay: 0.4s">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gradient mb-4">📅 Reservar tu Clase</h2>
+                <p class="text-gray-600 text-lg">Completa el formulario y comienza tu camino al éxito académico</p>
+            </div>
+            
+        <form id="form-reserva" method="POST" action="{{ url_for('citas_estudiante') }}" class="space-y-6">
+    <!-- Nombre completo del estudiante -->
+    <div>
+        <label for="nombre_estudiante" class="block text-lg font-semibold text-gray-700 mb-3">Nombre completo</label>
+        <input type="text" id="nombre_estudiante" name="nombre_estudiante" placeholder="Ingresa tu nombre completo" required 
+            class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-blue-500 form-focus bg-white/80">
+    </div>
+
+    <!-- Correo y Teléfono -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <label for="correo_estudiante" class="block text-lg font-semibold text-gray-700 mb-3">Correo electrónico</label>
+            <input type="email" id="correo_estudiante" name="correo_estudiante" placeholder="correo@ejemplo.com" required 
+                class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-blue-500 form-focus bg-white/80">
+        </div>
+
+        <div>
+            <label for="telefono_estudiante" class="block text-lg font-semibold text-gray-700 mb-3">Teléfono</label>
+            <input type="tel" id="telefono_estudiante" name="telefono_estudiante" placeholder="999 123 456" required 
+                class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-blue-500 form-focus bg-white/80">
+        </div>
+    </div>
+
+    <!-- Tipo de clase -->
+    <div>
+        <label for="tipo_clase" class="block text-lg font-semibold text-gray-700 mb-3">Tipo de clase</label>
+        <select id="tipo_clase" name="tipo_clase" required 
+                class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-blue-500 form-focus bg-white/80">
+            <option value="" disabled selected>Selecciona el tipo de clase</option>
+            <option value="Clases de nivel secundaria y preuniversitario">📚 Secundaria y Preuniversitario</option>
+            <option value="Preparación para exámenes">🎯 Preparación para Exámenes</option>
+            <option value="Clases online">💻 Clases Online</option>
+            <option value="Clases presenciales">🏫 Clases Presenciales</option>
+        </select>
+    </div>
+
+    <!-- Fecha, Hora y Estado -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+            <label for="fecha_reserva" class="block text-lg font-semibold text-gray-700 mb-3">Fecha preferida</label>
+            <input type="date" id="fecha_reserva" name="fecha_reserva" required 
+                class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-blue-500 form-focus bg-white/80">
+        </div>
+
+        <div>
+            <label for="hora_reserva" class="block text-lg font-semibold text-gray-700 mb-3">Hora preferida</label>
+            <select id="hora_reserva" name="hora_reserva" required 
+                    class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-blue-500 form-focus bg-white/80">
+                <option value="" disabled selected>Selecciona una hora</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="15:30">3:30 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="10:00">10:00 AM (Solo sábados)</option>
+                <option value="10:30">10:30 AM (Solo sábados)</option>
+                <option value="11:00">11:00 AM (Solo sábados)</option>
+                <option value="11:30">11:30 AM (Solo sábados)</option>
+                <option value="12:00">12:00 PM (Solo sábados)</option>
+                <option value="12:30">12:30 PM (Solo sábados)</option>
+                <option value="13:00">1:00 PM (Solo sábados)</option>
+                <option value="13:30">1:30 PM (Solo sábados)</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="estado" class="block text-lg font-semibold text-gray-700 mb-3">Estado de la reserva</label>
+            <input type="text" id="estado" name="estado" value="Pendiente" readonly 
+                class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl text-base bg-gray-50 text-gray-600 cursor-not-allowed">
+        </div>
+    </div>
+
+    <!-- Campo oculto para el profesor_id -->
+    <input type="hidden" name="profesor_id" value="2"> <!-- El ID del profesor siempre será el mismo -->
+
+    <button type="submit" class="w-full button-gradient text-white py-4 px-8 rounded-xl font-bold text-lg shadow-xl">
+        🚀 Reservar mi Clase Ahora
+    </button>
+        </form>
+
+        </div>
+        
+    <div class="text-center mt-8 fade-in" style="animation-delay: 0.5s">
+        <a href="{{ url_for('negocio') }}" class="inline-flex items-center back-button px-8 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105">
+            ← Volver a Profesionales
+        </a>
+    </div>
+
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    // Interceptar el envío del formulario
+    $('#form-reserva').on('submit', function(event) {
+        event.preventDefault();  // Prevenir la acción por defecto (enviar el formulario)
+
+        // Crear un objeto con los datos del formulario
+        var formData = {
+            nombre_estudiante: $('#nombre_estudiante').val(),
+            correo_estudiante: $('#correo_estudiante').val(),
+            telefono_estudiante: $('#telefono_estudiante').val(),
+            tipo_clase: $('#tipo_clase').val(),
+            fecha_reserva: $('#fecha_reserva').val(),
+            hora_reserva: $('#hora_reserva').val(),
+            estado: $('#estado').val(),
+            profesor_id: $('input[name="profesor_id"]').val(),
+        };
+
+        // Enviar los datos a la ruta de backend usando AJAX
+        $.ajax({
+            url: "{{ url_for('citas_estudiante') }}",  // URL de la ruta donde se procesarán los datos
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                // En caso de éxito, redirigir a la página de agradecimiento
+                window.location.href = "{{ url_for('gracias_reserva') }}";  // Redirige a la página de agradecimiento
+            },
+            error: function(error) {
+                // En caso de error, mostrar un mensaje
+                alert('Hubo un problema al realizar la reserva. Intenta de nuevo.');
+            }
+        });
+    });
+        // Validación de fecha mínima (no permitir fechas pasadas)
+        document.addEventListener('DOMContentLoaded', function() {
+            const fechaInput = document.getElementById('fecha_reserva');
+            const horaInput = document.getElementById('hora_reserva');
+            
+            // Establecer fecha mínima como hoy
+            const today = new Date();
+            const minDate = today.toISOString().split('T')[0];
+            fechaInput.min = minDate;
+            
+            // Validación de horarios según el día seleccionado
+            fechaInput.addEventListener('change', function() {
+                const selectedDate = new Date(this.value);
+                const dayOfWeek = selectedDate.getDay(); // 0 = Domingo, 6 = Sábado
+                
+                // Limpiar selección de hora
+                horaInput.value = '';
+                
+                // Mostrar/ocultar opciones según el día
+                const options = horaInput.querySelectorAll('option');
+                options.forEach(option => {
+                    if (option.value === '') return; // Mantener opción placeholder
+                    
+                    const isSaturdayTime = option.textContent.includes('Solo sábados');
+                    
+                    if (dayOfWeek === 6) { // Sábado
+                        option.style.display = 'block';
+                    } else if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Lunes a Viernes
+                        option.style.display = isSaturdayTime ? 'none' : 'block';
+                    } else { // Domingo
+                        option.style.display = 'none';
+                        if (option === options[1]) { // Mostrar mensaje en la primera opción real
+                            alert('Los domingos no hay clases disponibles. Por favor selecciona otro día.');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Efectos visuales para inputs
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('focus', () => {
+                element.style.transform = 'translateY(-2px)';
+            });
+            
+            element.addEventListener('blur', () => {
+                element.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Validación del formulario antes del envío
+        document.getElementById('form-reserva').addEventListener('submit', function(e) {
+            const fecha = document.getElementById('fecha_reserva').value;
+            const selectedDate = new Date(fecha);
+            const dayOfWeek = selectedDate.getDay();
+            
+            // Validar que no sea domingo
+            if (dayOfWeek === 0) {
+                e.preventDefault();
+                alert('Los domingos no hay clases disponibles. Por favor selecciona otro día.');
+                return;
+            }
+            
+            // Validar formato de teléfono (opcional, para formato peruano)
+            const telefono = document.getElementById('telefono_estudiante').value;
+            const telefonoPattern = /^[0-9]{9}$/;
+            if (!telefonoPattern.test(telefono.replace(/\s/g, ''))) {
+                e.preventDefault();
+                alert('Por favor ingresa un teléfono válido de 9 dígitos.');
+                return;
+            }
+        });
+    </script>
+</body>
+</html>

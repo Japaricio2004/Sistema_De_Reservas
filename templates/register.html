@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Registro de Negocio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    .bg-register {
+            background-image: url("{{ url_for('static', filename='images/fondo_login.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+    @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+    animation: fade-in 1s ease-out;
+    }
+</style>
+</head>
+<body class="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center bg-register">
+    <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 backdrop-blur-sm"></div>
+
+<div class="relative z-10 w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 animate-fade-in">
+
+    <div class="mb-6 text-center">
+    <h1 class="text-3xl font-extrabold text-green-600 drop-shadow-md">Crear Cuenta</h1>
+    <p class="text-sm text-gray-500 mt-1">Registra tu negocio para comenzar a recibir reservas</p>
+    </div>
+
+<form action="{{ url_for('register') }}" method="POST" class="space-y-5">
+    <div>
+        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required
+            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico:</label>
+        <input type="email" id="email" name="email" placeholder="Correo electrónico" required
+            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+    
+    <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña:</label>
+        <div class="relative">
+            <input type="password" id="password" name="password" placeholder="Contraseña" required
+                class="pl-12 pr-10 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
+            <i id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500">
+                👁️
+            </i>
+        </div>
+    </div>
+
+    <div>
+        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Rol:</label>
+        <select id="role" name="role" required
+            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option value="admin" selected>Gestor(a)</option>
+            <option value="cliente">Cliente</option>
+        </select>
+    </div>
+
+    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium text-base">
+        Registrar
+    </button>
+</form>
+
+    <p class="mt-5 text-sm text-center text-gray-500">
+    ¿Ya tienes una cuenta?
+    <a href="{{ url_for('login') }}" class="text-green-600 hover:underline">Inicia sesión</a>
+    </p>
+</div>
+
+<script>
+    const toggle = document.getElementById('togglePassword');
+    const password = document.getElementById('password');  
+    toggle.addEventListener('click', () => {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        toggle.classList.toggle('text-gray-400');
+        toggle.classList.toggle('text-green-600');
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'correo_usado') {
+        alert('El correo ya está registrado. Por favor inicia sesión.');
+    }
+</script>
+</body>
+</html>

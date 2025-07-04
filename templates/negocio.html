@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Todos los Profesionales - Directorio Completo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes fade-in-up {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes scale-in {
+            from { 
+                opacity: 0; 
+                transform: scale(0.8); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1); 
+            }
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); /* Cambiado a gradiente verde */
+            background-size: 400% 400%;
+            animation: gradient-shift 8s ease-in-out infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .fade-in {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+        
+        .scale-in {
+            animation: scale-in 0.6s ease-out forwards;
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .glow {
+            filter: drop-shadow(0 0 20px rgba(72, 187, 120, 0.3)); /* Cambiado a sombra verde */
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #48bb78, #38a169); /* Cambiado a gradiente verde */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+        
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .shimmer:hover::before {
+            left: 100%;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            background-color: #48bb78; /* Verde */
+        }
+        
+        .shape:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+            background-color: #38a169; /* Verde más oscuro */
+        }
+        
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+            background-color: #2f855a; /* Verde oscuro */
+        }
+        
+        .shape:nth-child(4) {
+            bottom: 30%;
+            right: 20%;
+            animation-delay: 6s;
+            background-color: #68d391; /* Verde claro */
+        }
+
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #48bb78, #38a169); /* Cambiado a gradiente verde */
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .search-box {
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(72, 187, 120, 0.25); /* Cambiado a sombra verde */
+        }
+
+        .professional-card {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.5s ease;
+        }
+
+        .professional-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen relative overflow-x-hidden">
+
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="shape w-32 h-32 rounded-full blur-xl"></div>
+        <div class="shape w-24 h-24 rounded-full blur-xl"></div>
+        <div class="shape w-20 h-20 rounded-full blur-xl"></div>
+        <div class="shape w-28 h-28 rounded-full blur-xl"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient py-16 relative">
+        <div class="mb-8 px-4 flex items-center" style="min-height: 80px;">
+            <div class="flex-1"></div>
+            <div class="flex-1 flex justify-center">
+                <h2 class="text-5xl font-bold title-gradient mb-4 tracking-tight text-white text-center">Bienvenido(a), {{ current_user.username }}</h2>
+            </div>
+            <div class="flex-1 flex justify-end">
+                <a href="{{ url_for('logout') }}" class="logout-btn px-6 py-3 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-red-600 hover:bg-red-700">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16,17 21,12 16,7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                        Cerrar sesión
+                    </span>
+                </a>
+            </div>
+        </div>
+    
+        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+            <div class="glass-effect rounded-3xl p-8 mx-auto max-w-5xl glow">
+                <div class="text-center mb-8">
+                    <h1 class="hero-title text-4xl md:text-5xl font-bold text-white mb-4 fade-in tracking-tight">
+                        Directorio Completo de
+                        <span class="block text-yellow-300">Profesionales</span>
+                    </h1>
+
+                    <p class="text-lg text-gray-200 fade-in max-w-2xl mx-auto leading-relaxed">
+                        Encuentra exactamente lo que necesitas con nuestros filtros avanzados
+                    </p>
+                </div>
+
+                <!-- Search and Filters -->
+                <div class="space-y-6">
+                    <!-- Search Bar -->
+                    <div class="relative max-w-2xl mx-auto">
+                        <input type="text" 
+                            id="searchInput"
+                            placeholder="Buscar por nombre, especialidad o servicio..." 
+                            class="search-box w-full px-6 py-4 rounded-2xl border-0 bg-white/90 backdrop-blur-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white/30 text-lg">
+                        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button class="filter-btn active px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="all">
+                            Todos
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="salud">
+                            Salud
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="educacion">
+                            Educación
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="veterinaria">
+                            Veterinaria
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="bienestar">
+                            Bienestar
+                        </button>
+                    </div>
+
+                    <!-- Availability Filters -->
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="online">
+                            🌐 Online
+                        </button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="presencial">
+                            🏢 Presencial
+                        </button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="domicilio">
+                            🏠 A Domicilio
+                        </button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="24h">
+                            ⏰ 24/7
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Results Counter -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="text-center">
+            <p class="text-gray-600 text-lg" id="resultsCounter">
+                Mostrando <span class="font-bold text-purple-600" id="resultCount">12</span> profesionales
+            </p>
+        </div>
+    </div>
+    <!-- Professionals Grid -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 pb-20">        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="professionalsGrid">
+            <!-- Nutricionista Julia -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="salud" data-availability="presencial online" data-name="Julia López" data-specialty="nutricionista clinica deportiva"
+                onclick="location.href='perfil_nutricionista.html?negocio=nutricionista_julia'"
+                style="animation-delay: 0.1s">
+                <div class="relative overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/nutricionista.jpeg') }}" alt="Nutricionista Julia López" class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Disponible</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-green-600 text-lg">🥗</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Julia López</h3>
+                            <p class="text-green-600 font-semibold text-sm">Nutricionista Clínica</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Especialista en nutrición clínica y deportiva. Planes personalizados para una vida más saludable.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Nutrición</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Deportiva</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.9 (127 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Psicólogo Martín -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="salud" data-availability="online presencial" data-name="Martín Herrera" data-specialty="psicologo clinico terapia pareja ansiedad"
+                onclick="location.href='perfil_psicologo.html?negocio=psicologo_martin'"
+                style="animation-delay: 0.2s">
+                <div class="relative overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/psicologo.jpeg') }}" alt="Psicólogo Martín Herrera" class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Online/Presencial</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-blue-600 text-lg">🧠</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Martín Herrera</h3>
+                            <p class="text-blue-600 font-semibold text-sm">Psicólogo Clínico</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Terapia individual y de pareja. Especialista en ansiedad y desarrollo personal.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Terapia</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Parejas</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.8 (89 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Veterinaria Patas Felices -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="veterinaria" data-availability="24h presencial" data-name="Patas Felices" data-specialty="veterinaria mascotas emergencias cirugia"
+                onclick="location.href='perfil_veterinaria.html?negocio=veterinaria_patas'"
+                style="animation-delay: 0.3s">
+                <div class="relative overflow-hidden">
+                    <img src="{{ url_for('static', filename='images/veterinaria.jpeg') }}" alt="Clínica Veterinaria Patas Felices" class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">24/7</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-orange-600 text-lg">🐾</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Patas Felices</h3>
+                            <p class="text-orange-600 font-semibold text-sm">Clínica Veterinaria</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Atención integral para tus mascotas. Consultas, vacunas, cirugías y emergencias.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">Mascotas</span>
+                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">Emergencias</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">24/7</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.7 (156 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profesor Ricardo -->
+        <a href="{{ url_for('perfil_profesor') }}?negocio=profesor_ricardo" class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+    data-category="educacion" data-availability="domicilio online" data-name="Ricardo López" data-specialty="matematicas fisica profesor clases particulares"
+    style="animation-delay: 0.4s">
+    <div class="relative overflow-hidden">
+        <img src="{{ url_for('static', filename='images/profesor.jpeg') }}" alt="Profesor Ricardo López" class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+        <div class="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold">A domicilio/Online</div>
+    </div>
+    <div class="p-6">
+        <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                <span class="text-purple-600 text-lg">📚</span>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-gray-800">Ricardo López</h3>
+                <p class="text-purple-600 font-semibold text-sm">Profesor de Matemáticas</p>
+            </div>
+        </div>
+        <p class="text-gray-600 mb-4 text-sm leading-relaxed">Clases particulares de matemática y física para secundaria y preuniversitario.</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Matemáticas</span>
+            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">Física</span>
+            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">A domicilio</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <div class="text-sm text-gray-500">⭐ 4.9 (73 reseñas)</div>
+            <div class="text-purple-600 font-bold">→</div>
+        </div>
+    </div>
+</a>
+
+
+            <!-- Fisioterapeuta Ana -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="salud" data-availability="presencial domicilio" data-name="Ana Martínez" data-specialty="fisioterapia rehabilitacion lesiones deportivas"
+                style="animation-delay: 0.5s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center">
+                        <span class="text-6xl">🏃‍♀️</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Presencial</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-teal-600 text-lg">💪</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Ana Martínez</h3>
+                            <p class="text-teal-600 font-semibold text-sm">Fisioterapeuta</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Rehabilitación y fisioterapia deportiva. Especialista en lesiones y recuperación.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs">Fisioterapia</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Deportiva</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">A domicilio</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.8 (94 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Coach Personal -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="bienestar" data-availability="online presencial" data-name="Carlos Vega" data-specialty="coach personal desarrollo liderazgo motivacion"
+                style="animation-delay: 0.6s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                        <span class="text-6xl">🎯</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Online/Presencial</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-yellow-600 text-lg">🚀</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Carlos Vega</h3>
+                            <p class="text-yellow-600 font-semibold text-sm">Coach Personal</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Desarrollo personal y profesional. Liderazgo, motivación y alcance de objetivos.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Coaching</span>
+                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">Liderazgo</span>
+                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">Motivación</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.9 (112 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Profesora de Inglés -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="educacion" data-availability="online domicilio" data-name="Sarah Johnson" data-specialty="ingles profesora idiomas conversacion"
+                style="animation-delay: 0.7s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-6xl">🗣️</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Online/A domicilio</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-pink-600 text-lg">🌍</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Sarah Johnson</h3>
+                            <p class="text-pink-600 font-semibold text-sm">Profesora de Inglés</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Clases de inglés personalizadas. Conversación, gramática y preparación de exámenes.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs">Ingles</span>
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Conversacion</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.8 (88 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Masajista Relax -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="bienestar" data-availability="presencial domicilio" data-name="Relax Spa" data-specialty="masajes relajacion spa bienestar"
+                style="animation-delay: 0.8s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-teal-400 to-green-500 flex items-center justify-center">
+                        <span class="text-6xl">💆‍♀️</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Presencial/A domicilio</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-teal-600 text-lg">🧖‍♀️</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Relax Spa</h3>
+                            <p class="text-teal-600 font-semibold text-sm">Masajista Profesional</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Masajes relajantes y terapéuticos. Spa de bienestar con atención personalizada.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs">Masajes</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Relajación</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Spa</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.9 (102 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Nutricionista Ana -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="salud" data-availability="online presencial" data-name="Ana Torres" data-specialty="nutricionista dietista salud bienestar"
+                style="animation-delay: 0.9s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                        <span class="text-6xl">🥗</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Online/Presencial</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-yellow-600 text-lg">🥗</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Ana Torres</h3>
+                            <p class="text-yellow-600 font-semibold text-sm">Nutricionista</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Especialista en nutrición y dietética. Planes personalizados para una vida saludable.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Nutrición</span>
+                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">Bienestar</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.8 (95 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Psicóloga Laura -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="salud" data-availability="online presencial" data-name="Laura Gómez" data-specialty="psicologa terapia emocional ansiedad depresion"
+                style="animation-delay: 1s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
+                        <span class="text-6xl">🧠</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Online/Presencial</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-purple-600 text-lg">🧠</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Laura Gómez</h3>
+                            <p class="text-purple-600 font-semibold text-sm">Psicóloga</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Terapia emocional y apoyo psicológico. Especialista en ansiedad y depresión.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Psicología</span>
+                        <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-xs">Emocional</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.9 (110 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Entrenador Personal -->
+            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+                data-category="bienestar" data-availability="presencial online" data-name="David Pérez" data-specialty="entrenador personal fitness salud bienestar"
+                style="animation-delay: 1.1s">
+                <div class="relative overflow-hidden">
+                    <div class="w-full h-48 bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center">
+                        <span class="text-6xl">🏋️‍♂️</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Online/Presencial</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-green-600 text-lg">🏋️‍♂️</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">David Pérez</h3>
+                            <p class="text-green-600 font-semibold text-sm">Entrenador Personal</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Entrenamiento personalizado y asesoría fitness. Mejora tu salud y bienestar con planes adaptados a ti.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Entrenamiento</span>
+                        <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs">Fitness</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">⭐ 4.8 (120 reseñas)</div>
+                        <div class="text-purple-600 font-bold">→</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex justify-center">
+            <nav class="flex items-center space-x-2">
+                <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition" id="prevPageBtn" disabled>
+                    Anterior
+                </button>
+                <span class="text-white text-lg" id="currentPage">1</span>
+                <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition" id="nextPageBtn">
+                    Siguiente
+                </button>
+            </nav>
+        </div>
+    </div>
+    <!-- Botón de historial de reservas arriba -->
+    <div class="container mx-auto my-6 p-4 text-center">
+        <a href="{{ url_for('citas_estudiante') }}" class="bg-teal-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-teal-700">
+            Historial de Reservas
+        </a>
+    </div>
+    <footer class="bg-gray-900 text-white py-8">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center">
+            <p>&copy; 2025 ReservaFacil. Creado por Jorge Aparicio.</p>
+        </div>
+    </div>
+</footer>
+    <script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        const professionals = document.querySelectorAll('.professional-card');
+        let count = 0;
+        professionals.forEach(professional => {
+            const name = professional.dataset.name.toLowerCase();
+            const specialty = professional.dataset.specialty.toLowerCase();
+            
+            if (searchTerm === '' || name.includes(searchTerm) || specialty.includes(searchTerm)) {
+                professional.classList.remove('hidden');
+                count++;
+            } else {
+                professional.classList.add('hidden');
+            }
+        });
+        document.getElementById('resultCount').textContent = count;
+        currentPage = 1;
+        updatePagination();
+    });
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+            
+            const category = button.getAttribute('data-category');
+            const availability = button.getAttribute('data-availability');
+            filterProfessionals(category, availability);
+        });
+    });
+    function filterProfessionals(category, availability) {
+        const professionals = document.querySelectorAll('.professional-card');
+        let count = 0;
+        professionals.forEach(professional => {
+            const matchesCategory = !category || category === 'all' || professional.dataset.category.includes(category);
+            const matchesAvailability = !availability || professional.dataset.availability.includes(availability);
+            if (matchesCategory && matchesAvailability) {
+                professional.classList.remove('hidden');
+                count++;
+            } else {
+                professional.classList.add('hidden');
+            }
+        });
+        currentPage = 1;
+        updatePagination();
+    }
+    let currentPage = 1;
+    const professionalsPerPage = 4;
+    const professionalsGrid = document.getElementById('professionalsGrid');
+    function updatePagination() {
+        const visibleProfessionals = Array.from(professionalsGrid.children).filter(
+            card => !card.classList.contains('hidden')
+        );
+        const totalVisible = visibleProfessionals.length;
+        const totalPages = Math.ceil(totalVisible / professionalsPerPage);
+        
+        const start = (currentPage - 1) * professionalsPerPage;
+        const end = start + professionalsPerPage;
+        professionalsGrid.querySelectorAll('.professional-card').forEach(card => {
+            card.style.display = 'none';
+        });
+        
+        visibleProfessionals.forEach((professional, index) => {
+            if (index >= start && index < end) {
+                professional.style.display = 'block';
+            }
+        });
+        document.getElementById('currentPage').textContent = currentPage;
+        document.getElementById('prevPageBtn').disabled = currentPage === 1;
+        document.getElementById('nextPageBtn').disabled = currentPage === totalPages || totalVisible === 0;
+        
+        document.getElementById('resultCount').textContent = totalVisible;
+    }
+    document.getElementById('prevPageBtn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            updatePagination();
+        }
+    });
+    document.getElementById('nextPageBtn').addEventListener('click', () => {
+        const visibleProfessionals = Array.from(professionalsGrid.children).filter(
+            card => !card.classList.contains('hidden')
+        );
+        const totalPages = Math.ceil(visibleProfessionals.length / professionalsPerPage);
+        
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePagination();
+        }
+    });
+    filterProfessionals('all', '');
+    updatePagination();
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    // Agregar click handler a todas las tarjetas profesionales
+    const cards = document.querySelectorAll('.professional-card[data-href]');
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            window.location.href = this.getAttribute('data-href');
+        });
+    });
+});
+    </script>
+</body>
+</html>
+
+
