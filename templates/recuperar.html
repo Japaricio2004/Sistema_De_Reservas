@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Recuperar Contraseña</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    .bg-login {
+        background-image: url("{{ url_for('static', filename='images/fondo_login.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        animation: fade-in 1s ease-out;
+    }
+</style>
+</head>
+<body class="relative min-h-screen bg-cover bg-center bg-no-repeat bg-login">
+    <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 backdrop-blur-sm"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md animate-fade-in">
+            <div class="mb-6 text-center">
+                <h1 class="text-3xl font-extrabold text-green-600 drop-shadow-md">Recuperar contraseña</h1>
+                <p class="text-sm text-gray-500 mt-1">Ingresa tu nombre de usuario, correo electrónico y establece una nueva contraseña</p>
+            </div>
+            <form action="" method="POST" class="space-y-5">
+                <div class="form-group">
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario:</label>
+                    <div class="relative">
+                        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required
+                            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <i class="fa fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico:</label>
+                    <div class="relative">
+                        <input type="email" id="email" name="email" placeholder="Correo electrónico" required
+                            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <i class="fa fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Nueva contraseña:</label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" placeholder="Nueva contraseña" required
+                            class="pl-12 pr-10 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <i class="fa fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i id="togglePassword" class="fa fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-1">Confirmar contraseña:</label>
+                    <div class="relative">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar contraseña" required
+                            class="pl-12 pr-10 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <i class="fa fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i id="toggleConfirmPassword" class="fa fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"></i>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium text-base">
+                    Cambiar contraseña
+                </button>
+            </form>
+            <p class="mt-4 text-sm text-center text-gray-600">
+                ¿Recuerdas tu contraseña? <a href="{{ url_for('login') }}" class="text-green-600 hover:underline font-semibold">Inicia sesión</a>
+            </p>
+        </div>
+    </div>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        togglePassword.addEventListener('click', () => {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            togglePassword.classList.toggle('text-gray-400');
+            togglePassword.classList.toggle('text-green-600');
+        });
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPassword = document.getElementById('confirm_password');
+        toggleConfirmPassword.addEventListener('click', () => {
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            toggleConfirmPassword.classList.toggle('text-gray-400');
+            toggleConfirmPassword.classList.toggle('text-green-600');
+        });
+    </script>
+</body>
+</html>

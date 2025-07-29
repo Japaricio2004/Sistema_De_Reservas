@@ -45,7 +45,7 @@
         }
         
         .hero-gradient {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); /* Cambiado a gradiente verde */
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             background-size: 400% 400%;
             animation: gradient-shift 8s ease-in-out infinite;
         }
@@ -78,11 +78,11 @@
         }
         
         .glow {
-            filter: drop-shadow(0 0 20px rgba(72, 187, 120, 0.3)); /* Cambiado a sombra verde */
+            filter: drop-shadow(0 0 20px rgba(72, 187, 120, 0.3));
         }
         
         .text-gradient {
-            background: linear-gradient(135deg, #48bb78, #38a169); /* Cambiado a gradiente verde */
+            background: linear-gradient(135deg, #48bb78, #38a169);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -130,28 +130,28 @@
             top: 10%;
             left: 10%;
             animation-delay: 0s;
-            background-color: #48bb78; /* Verde */
+            background-color: #48bb78;
         }
         
         .shape:nth-child(2) {
             top: 20%;
             right: 10%;
             animation-delay: 2s;
-            background-color: #38a169; /* Verde más oscuro */
+            background-color: #38a169;
         }
         
         .shape:nth-child(3) {
             bottom: 20%;
             left: 15%;
             animation-delay: 4s;
-            background-color: #2f855a; /* Verde oscuro */
+            background-color: #2f855a;
         }
         
         .shape:nth-child(4) {
             bottom: 30%;
             right: 20%;
             animation-delay: 6s;
-            background-color: #68d391; /* Verde claro */
+            background-color: #68d391;
         }
 
         .filter-btn {
@@ -159,7 +159,7 @@
         }
 
         .filter-btn.active {
-            background: linear-gradient(135deg, #48bb78, #38a169); /* Cambiado a gradiente verde */
+            background: linear-gradient(135deg, #48bb78, #38a169);
             color: white;
             transform: scale(1.05);
         }
@@ -170,7 +170,7 @@
 
         .search-box:focus {
             transform: scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(72, 187, 120, 0.25); /* Cambiado a sombra verde */
+            box-shadow: 0 10px 25px -5px rgba(72, 187, 120, 0.25);
         }
 
         .professional-card {
@@ -185,16 +185,108 @@
             pointer-events: none;
         }
         
-        @media (max-width: 768px) {
+        /* Mejoras responsive */
+        @media (max-width: 1024px) {
             .hero-title {
                 font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .filter-container {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .search-box {
+                padding: 0.75rem 1rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            .professional-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .card-image {
+                height: auto;
+                max-height: 200px;
+            }
+            
+            .pagination-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .professional-name {
+                font-size: 1.1rem;
+            }
+            
+            .professional-description {
+                font-size: 0.875rem;
             }
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen relative overflow-x-hidden">
-
-    <!-- Floating Background Shapes -->
+<body class="min-h-screen flex flex-col">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <div class="fixed top-0 left-0 w-full flex flex-row items-center justify-between bg-white shadow-2xl px-4 md:px-8 py-4 md:py-5 z-50">
+    <span class="text-lg md:text-2xl font-extrabold tracking-widest text-green-600 drop-shadow-lg" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.12em;">
+        ReservaFacil
+    </span>
+    <a href="{{ url_for('logout') }}" class="bg-red-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-base md:text-lg shadow-xl hover:bg-red-700 hover:scale-105 transition-all duration-200 border-2 border-white/30">
+        Cerrar sesión
+    </a>
+</div>
+    <div class="flex-1 w-full">
+        <div class="bg-green-600 w-full">
+            <div class="pt-10 md:pt-14 lg:pt-16"></div>
+        </div>
+        <!-- Floating Background Shapes -->
     <div class="floating-shapes">
         <div class="shape w-32 h-32 rounded-full blur-xl"></div>
         <div class="shape w-24 h-24 rounded-full blur-xl"></div>
@@ -203,86 +295,74 @@
     </div>
 
     <!-- Hero Section -->
-    <div class="hero-gradient py-16 relative">
-        <div class="mb-8 px-4 flex items-center" style="min-height: 80px;">
-            <div class="flex-1"></div>
-            <div class="flex-1 flex justify-center">
-                <h2 class="text-5xl font-bold title-gradient mb-4 tracking-tight text-white text-center">Bienvenido(a), {{ current_user.username }}</h2>
-            </div>
-            <div class="flex-1 flex justify-end">
-                <a href="{{ url_for('logout') }}" class="logout-btn px-6 py-3 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-red-600 hover:bg-red-700">
-                    <span class="relative z-10 flex items-center gap-2">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                            <polyline points="16,17 21,12 16,7"/>
-                            <line x1="21" y1="12" x2="9" y2="12"/>
-                        </svg>
-                        Cerrar sesión
-                    </span>
-                </a>
+    <div class="hero-gradient py-8 md:py-16 relative">
+        <div class="header-container mb-8 px-4 flex flex-col md:flex-row items-center gap-4">
+            <div class="flex-1 w-full md:w-auto"></div>
+            <div class="w-full flex justify-center">
+                <h2 class="hero-title text-3xl md:text-5xl font-bold title-gradient mb-4 tracking-tight text-white text-center w-full">Bienvenido(a), {{ current_user.username }}</h2>
             </div>
         </div>
     
         <div class="absolute inset-0 bg-black bg-opacity-20"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4">
-            <div class="glass-effect rounded-3xl p-8 mx-auto max-w-5xl glow">
-                <div class="text-center mb-8">
-                    <h1 class="hero-title text-4xl md:text-5xl font-bold text-white mb-4 fade-in tracking-tight">
+            <div class="glass-effect rounded-2xl md:rounded-3xl p-6 md:p-8 mx-auto max-w-5xl glow">
+                <div class="text-center mb-6 md:mb-8">
+                    <h1 class="hero-title text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 fade-in tracking-tight">
                         Directorio Completo de
                         <span class="block text-yellow-300">Profesionales</span>
                     </h1>
 
-                    <p class="text-lg text-gray-200 fade-in max-w-2xl mx-auto leading-relaxed">
+                    <p class="hero-subtitle text-base md:text-lg text-gray-200 fade-in max-w-2xl mx-auto leading-relaxed">
                         Encuentra exactamente lo que necesitas con nuestros filtros avanzados
                     </p>
                 </div>
 
                 <!-- Search and Filters -->
-                <div class="space-y-6">
+                <div class="space-y-4 md:space-y-6">
                     <!-- Search Bar -->
                     <div class="relative max-w-2xl mx-auto">
                         <input type="text" 
                             id="searchInput"
                             placeholder="Buscar por nombre, especialidad o servicio..." 
-                            class="search-box w-full px-6 py-4 rounded-2xl border-0 bg-white/90 backdrop-blur-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white/30 text-lg">
-                        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="search-box w-full px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl border-0 bg-white/90 backdrop-blur-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white/30 text-base md:text-lg">
+                        <div class="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
                     </div>
 
                     <!-- Category Filters -->
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <button class="filter-btn active px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="all">
+                    <div class="filter-container flex overflow-x-auto md:overflow-visible py-2 gap-2 md:gap-3 flex-wrap justify-center">
+                        <button class="filter-btn active px-4 py-2 md:px-6 md:py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30 whitespace-nowrap" data-category="all">
                             Todos
                         </button>
-                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="salud">
+                        <button class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30 whitespace-nowrap" data-category="salud">
                             Salud
                         </button>
-                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="educacion">
+                        <button class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30 whitespace-nowrap" data-category="educacion">
                             Educación
                         </button>
-                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="veterinaria">
+                        <button class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30 whitespace-nowrap" data-category="veterinaria">
                             Veterinaria
                         </button>
-                        <button class="filter-btn px-6 py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30" data-category="bienestar">
+                        <button class="filter-btn px-4 py-2 md:px-6 md:py-3 rounded-full bg-white/20 text-white font-semibold hover:bg-white/30 whitespace-nowrap" data-category="bienestar">
                             Bienestar
                         </button>
                     </div>
 
                     <!-- Availability Filters -->
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="online">
+                    <div class="filter-container flex overflow-x-auto md:overflow-visible py-2 gap-2 md:gap-3 flex-wrap justify-center">
+                        <button class="filter-btn px-3 py-1 md:px-4 md:py-2 rounded-full bg-white/15 text-white text-xs md:text-sm hover:bg-white/25 whitespace-nowrap" data-availability="online">
                             🌐 Online
                         </button>
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="presencial">
+                        <button class="filter-btn px-3 py-1 md:px-4 md:py-2 rounded-full bg-white/15 text-white text-xs md:text-sm hover:bg-white/25 whitespace-nowrap" data-availability="presencial">
                             🏢 Presencial
                         </button>
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="domicilio">
+                        <button class="filter-btn px-3 py-1 md:px-4 md:py-2 rounded-full bg-white/15 text-white text-xs md:text-sm hover:bg-white/25 whitespace-nowrap" data-availability="domicilio">
                             🏠 A Domicilio
                         </button>
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white/15 text-white text-sm hover:bg-white/25" data-availability="24h">
+                        <button class="filter-btn px-3 py-1 md:px-4 md:py-2 rounded-full bg-white/15 text-white text-xs md:text-sm hover:bg-white/25 whitespace-nowrap" data-availability="24h">
                             ⏰ 24/7
                         </button>
                     </div>
@@ -291,48 +371,48 @@
         </div>
     </div>
     <!-- Results Counter -->
-    <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="max-w-7xl mx-auto px-4 py-6 md:py-8">
         <div class="text-center">
-            <p class="text-gray-600 text-lg" id="resultsCounter">
+            <p class="text-gray-600 text-base md:text-lg" id="resultsCounter">
                 Mostrando <span class="font-bold text-purple-600" id="resultCount">12</span> profesionales
             </p>
         </div>
     </div>
     <!-- Professionals Grid -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 pb-20">        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="professionalsGrid">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 pb-12 md:pb-20">        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="professionalsGrid">
             <!-- Nutricionista Julia -->
-            <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
-                data-category="salud" data-availability="presencial online" data-name="Julia López" data-specialty="nutricionista clinica deportiva"
-                onclick="location.href='perfil_nutricionista.html?negocio=nutricionista_julia'"
-                style="animation-delay: 0.1s">
-                <div class="relative overflow-hidden">
-                    <img src="{{ url_for('static', filename='images/nutricionista.jpeg') }}" alt="Nutricionista Julia López" class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
-                    <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Disponible</div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-green-600 text-lg">🥗</span>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">Julia López</h3>
-                            <p class="text-green-600 font-semibold text-sm">Nutricionista Clínica</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">Especialista en nutrición clínica y deportiva. Planes personalizados para una vida más saludable.</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Nutrición</span>
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Deportiva</span>
-                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Online</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="text-sm text-gray-500">⭐ 4.9 (127 reseñas)</div>
-                        <div class="text-purple-600 font-bold">→</div>
-                    </div>
-                </div>
+<a href="{{ url_for('perfil_nutricionista') }}?negocio=nutricionista_julia" class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
+    data-category="salud" data-availability="presencial online" data-name="Julia López" data-specialty="nutricionista clinica deportiva"
+    style="animation-delay: 0.1s">
+    <div class="relative overflow-hidden">
+        <img src="{{ url_for('static', filename='images/nutricionista.jpeg') }}" alt="Nutricionista Julia López" class="card-image w-full h-40 md:h-48 object-cover transform group-hover:scale-110 transition duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+        <div class="absolute top-3 md:top-4 right-3 md:right-4 bg-green-500 text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-semibold">Disponible</div>
+    </div>
+    <div class="p-4 md:p-6">
+        <div class="flex items-center mb-3 md:mb-4">
+            <div class="w-8 h-8 md:w-10 md:h-10 bg-green-100 rounded-full flex items-center justify-center mr-2 md:mr-3">
+                <span class="text-green-600 text-base md:text-lg">🥗</span>
             </div>
+            <div>
+                <h3 class="professional-name text-lg md:text-xl font-bold text-gray-800">Julia López</h3>
+                <p class="text-green-600 font-semibold text-xs md:text-sm">Nutricionista Clínica</p>
+            </div>
+        </div>
+        <p class="professional-description text-gray-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Especialista en nutrición clínica y deportiva. Planes personalizados para una vida más saludable.</p>
+        <div class="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
+            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Nutrición</span>
+            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Deportiva</span>
+            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Online</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <div class="text-xs md:text-sm text-gray-500">⭐ 4.9 (127 reseñas)</div>
+            <div class="text-purple-600 font-bold">→</div>
+        </div>
+    </div>
+</a>
+            
             <!-- Psicólogo Martín -->
             <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
                 data-category="salud" data-availability="online presencial" data-name="Martín Herrera" data-specialty="psicologo clinico terapia pareja ansiedad"
@@ -429,8 +509,6 @@
         </div>
     </div>
 </a>
-
-
             <!-- Fisioterapeuta Ana -->
             <div class="professional-card card-gradient rounded-3xl shadow-xl overflow-hidden card-hover cursor-pointer shimmer fade-in group"
                 data-category="salud" data-availability="presencial domicilio" data-name="Ana Martínez" data-specialty="fisioterapia rehabilitacion lesiones deportivas"
@@ -661,44 +739,76 @@
                         <div class="text-purple-600 font-bold">→</div>
                     </div>
                 </div>
-            </div>
+            </div>          
         </div>
     </div>
-    <div class="max-w-7xl mx-auto px-4 py-8">
+    
+    <!-- Pagination -->
+    <div class="max-w-7xl mx-auto px-4 py-6 md:py-8">
         <div class="flex justify-center">
             <nav class="flex items-center space-x-2">
-                <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition" id="prevPageBtn" disabled>
+                <button class="pagination-btn px-3 py-1 md:px-4 md:py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition text-sm md:text-base" id="prevPageBtn" disabled>
                     Anterior
                 </button>
-                <span class="text-white text-lg" id="currentPage">1</span>
-                <button class="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition" id="nextPageBtn">
+                <span class="text-white text-base md:text-lg" id="currentPage">1</span>
+                <button class="pagination-btn px-3 py-1 md:px-4 md:py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition text-sm md:text-base" id="nextPageBtn">
                     Siguiente
                 </button>
             </nav>
         </div>
     </div>
-    <!-- Botón de historial de reservas arriba -->
-    <div class="container mx-auto my-6 p-4 text-center">
-        <a href="{{ url_for('citas_estudiante') }}" class="bg-teal-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-teal-700">
+    
+    <!-- Botón de historial de reservas -->
+    <div class="container mx-auto my-4 md:my-6 p-4 text-center">
+        <a href="{{ url_for('historial_citas') }}" class="bg-teal-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-full text-base md:text-lg font-bold hover:bg-teal-700">
             Historial de Reservas
         </a>
     </div>
-    <footer class="bg-gray-900 text-white py-8">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center">
-            <p>&copy; 2025 ReservaFacil. Creado por Jorge Aparicio.</p>
+    </div> 
+
+    <footer class="bg-gray-900 text-white py-6 md:py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center">
+                <p class="text-sm md:text-base">&copy; 2025 ReservaFacil. Creado por Jorge Aparicio.</p>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</body>
+</body>
+
     <script>
+    // Mensaje de no encontrado
+    let noResultsCard = null;
+    function showNoResultsCard() {
+        if (!noResultsCard) {
+            noResultsCard = document.createElement('div');
+            noResultsCard.className = 'professional-card card-gradient shadow-xl flex flex-col items-center justify-center p-8 text-center fade-in';
+            noResultsCard.style.minHeight = '300px';
+            noResultsCard.style.gridColumn = '1 / -1';
+            noResultsCard.innerHTML = `
+                <div class="flex flex-col items-center justify-center w-full h-full min-h-[200px] md:min-h-[300px]">
+                    <div class="text-5xl mb-4">🔍</div>
+                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-800 mb-2">No se encontraron profesionales</h3>
+                    <p class="text-gray-600 text-base md:text-lg">Intenta con otro nombre o especialidad.</p>
+                </div>
+            `;
+            document.getElementById('professionalsGrid').appendChild(noResultsCard);
+        }
+        noResultsCard.style.display = 'block';
+    }
+    function hideNoResultsCard() {
+        if (noResultsCard) noResultsCard.style.display = 'none';
+    }
+
     document.getElementById('searchInput').addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase().trim();
         const professionals = document.querySelectorAll('.professional-card');
         let count = 0;
         professionals.forEach(professional => {
-            const name = professional.dataset.name.toLowerCase();
-            const specialty = professional.dataset.specialty.toLowerCase();
-            
+            // No filtrar la card de no resultados
+            if (professional === noResultsCard) return;
+            const name = professional.dataset.name ? professional.dataset.name.toLowerCase() : '';
+            const specialty = professional.dataset.specialty ? professional.dataset.specialty.toLowerCase() : '';
             if (searchTerm === '' || name.includes(searchTerm) || specialty.includes(searchTerm)) {
                 professional.classList.remove('hidden');
                 count++;
@@ -709,7 +819,13 @@
         document.getElementById('resultCount').textContent = count;
         currentPage = 1;
         updatePagination();
+        if (count === 0) {
+            showNoResultsCard();
+        } else {
+            hideNoResultsCard();
+        }
     });
+    
     document.querySelectorAll('.filter-btn').forEach(button => {
         button.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -722,6 +838,7 @@
             filterProfessionals(category, availability);
         });
     });
+    
     function filterProfessionals(category, availability) {
         const professionals = document.querySelectorAll('.professional-card');
         let count = 0;
@@ -738,41 +855,45 @@
         currentPage = 1;
         updatePagination();
     }
+    
     let currentPage = 1;
-    const professionalsPerPage = 4;
-    const professionalsGrid = document.getElementById('professionalsGrid');
+    const professionalsPerPage = 6; // Mostrar más tarjetas en móvil para mejor experiencia
+    
     function updatePagination() {
-        const visibleProfessionals = Array.from(professionalsGrid.children).filter(
-            card => !card.classList.contains('hidden')
+        const professionalsGrid = document.getElementById('professionalsGrid');
+        const allProfessionals = Array.from(professionalsGrid.children).filter(
+            card => card.classList.contains('professional-card') && (!noResultsCard || card !== noResultsCard)
         );
+        const visibleProfessionals = allProfessionals.filter(card => !card.classList.contains('hidden'));
         const totalVisible = visibleProfessionals.length;
-        const totalPages = Math.ceil(totalVisible / professionalsPerPage);
-        
+        const totalPages = Math.ceil(totalVisible / professionalsPerPage) || 1;
+
+        // Ocultar todos primero
+        allProfessionals.forEach(card => { card.style.display = 'none'; });
+        // Mostrar solo los de la página actual
         const start = (currentPage - 1) * professionalsPerPage;
         const end = start + professionalsPerPage;
-        professionalsGrid.querySelectorAll('.professional-card').forEach(card => {
-            card.style.display = 'none';
-        });
-        
         visibleProfessionals.forEach((professional, index) => {
             if (index >= start && index < end) {
                 professional.style.display = 'block';
             }
         });
+
         document.getElementById('currentPage').textContent = currentPage;
         document.getElementById('prevPageBtn').disabled = currentPage === 1;
         document.getElementById('nextPageBtn').disabled = currentPage === totalPages || totalVisible === 0;
-        
         document.getElementById('resultCount').textContent = totalVisible;
     }
+    
     document.getElementById('prevPageBtn').addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
             updatePagination();
         }
     });
+    
     document.getElementById('nextPageBtn').addEventListener('click', () => {
-        const visibleProfessionals = Array.from(professionalsGrid.children).filter(
+        const visibleProfessionals = Array.from(document.getElementById('professionalsGrid').children).filter(
             card => !card.classList.contains('hidden')
         );
         const totalPages = Math.ceil(visibleProfessionals.length / professionalsPerPage);
@@ -782,20 +903,25 @@
             updatePagination();
         }
     });
+    
+    // Inicializar
     filterProfessionals('all', '');
     updatePagination();
     
-    document.addEventListener('DOMContentLoaded', function() {
-    // Agregar click handler a todas las tarjetas profesionales
-    const cards = document.querySelectorAll('.professional-card[data-href]');
-    cards.forEach(card => {
-        card.addEventListener('click', function() {
-            window.location.href = this.getAttribute('data-href');
-        });
-    });
-});
+    // Ajustar número de tarjetas por página según tamaño de pantalla
+    function adjustCardsPerPage() {
+        if (window.innerWidth < 640) {
+            professionalsPerPage = 4;
+        } else if (window.innerWidth < 1024) {
+            professionalsPerPage = 6;
+        } else {
+            professionalsPerPage = 9;
+        }
+        updatePagination();
+    }
+    
+    window.addEventListener('resize', adjustCardsPerPage);
+    adjustCardsPerPage();
     </script>
 </body>
 </html>
-
-

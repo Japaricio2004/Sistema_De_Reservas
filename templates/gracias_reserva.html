@@ -1,38 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Reserva Confirmada</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-    @keyframes fade-in {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fade-in 1s ease-out;
-    }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reserva Confirmada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce-in {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes pulse-success {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out;
+        }
+        .animate-bounce-in {
+            animation: bounce-in 0.6s ease-out;
+        }
+        .animate-pulse-success {
+            animation: pulse-success 2s infinite;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .success-glow {
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+        }
+    </style>
 </head>
-<body class="bg-green-100 min-h-screen flex items-center justify-center">
-
-<div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full animate-fade-in">
-    <div class="flex justify-center mb-4">
-        <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+<body class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <!-- Fondo animado con partículas -->
+    <div class="absolute inset-0 gradient-bg">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-4 h-4 bg-white rounded-full animate-pulse"></div>
+            <div class="absolute top-20 right-20 w-2 h-2 bg-white rounded-full animate-pulse delay-75"></div>
+            <div class="absolute bottom-20 left-20 w-3 h-3 bg-white rounded-full animate-pulse delay-150"></div>
+            <div class="absolute bottom-32 right-32 w-2 h-2 bg-white rounded-full animate-pulse delay-300"></div>
+            <div class="absolute top-1/2 left-1/4 w-1 h-1 bg-white rounded-full animate-pulse delay-500"></div>
+        </div>
     </div>
 
-    <h2 class="text-3xl font-extrabold text-green-600 drop-shadow-sm mb-2">¡Reserva confirmada!</h2>
-    <p class="text-gray-700">Tu cita ha sido registrada exitosamente.</p>
-    <p class="mt-2 text-sm text-gray-600">Recibirás un correo de confirmación con los detalles.</p>
+    <!-- Contenedor principal -->
+    <div class="relative z-10 glass-effect p-10 rounded-3xl shadow-2xl text-center max-w-lg w-full mx-4 animate-fade-in success-glow">
+        
+        <!-- Icono de éxito con animación -->
+        <div class="flex justify-center mb-6 animate-bounce-in">
+            <div class="relative">
+                <div class="w-24 h-24 bg-green-600 rounded-full flex items-center justify-center animate-pulse-success">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="absolute inset-0 w-24 h-24 bg-green-500 rounded-full animate-ping opacity-20"></div>
+            </div>
+        </div>
 
-    <!-- El enlace será dinámico con la ruta a la página principal (ajustable en Flask) -->
-    <a href="{{ url_for('negocio') }}" class="mt-6 inline-block bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium">
-        Volver al inicio
-    </a>
-</div>
+        <!-- Título principal -->
+        <h1 class="text-4xl font-black text-green-700 mb-3 animate-fade-in">
+            ¡Reserva Confirmada!
+        </h1>
 
+        <!-- Subtítulo -->
+        <div class="mb-6 animate-fade-in delay-100">
+            <p class="text-lg text-gray-700 font-medium mb-2">
+                Tu cita ha sido registrada exitosamente
+            </p>
+            <div class="w-16 h-1 bg-green-500 mx-auto rounded-full"></div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="bg-green-50 p-6 rounded-2xl mb-8 animate-fade-in delay-200">
+            <div class="flex items-center justify-center mb-3">
+                <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span class="text-green-800 font-semibold">Confirmación enviada</span>
+            </div>
+            <p class="text-sm text-green-700">
+                Recibirás un correo electrónico con todos los detalles de tu cita en los próximos minutos.
+            </p>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="space-y-4 animate-fade-in delay-300">
+            <a href="{{ url_for('negocio') }}" class="block w-full bg-green-600 text-white px-8 py-4 rounded-2xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-bold text-lg animate-float">
+                <span class="flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    Volver al Inicio
+                </span>
+            </a>
+
+        </div>
+
+        <!-- Mensaje de seguimiento -->
+        <div class="mt-8 pt-6 border-t border-green-200 animate-fade-in delay-400">
+            <p class="text-xs text-gray-500 leading-relaxed">
+                Si necesitas modificar o cancelar tu cita, por favor contacta con nosotros al menos 24 horas antes de la fecha programada.
+            </p>
+        </div>
+    </div>
 </body>
 </html>

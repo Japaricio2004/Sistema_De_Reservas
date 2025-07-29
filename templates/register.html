@@ -5,91 +5,117 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Registro de Negocio</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
     .bg-register {
-            background-image: url("{{ url_for('static', filename='images/fondo_login.jpg') }}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+        background-image: url("{{ url_for('static', filename='images/fondo_login.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 
     @keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in {
-    animation: fade-in 1s ease-out;
+        animation: fade-in 1s ease-out;
+    }
+    
+    .btn-google {
+        transition: all 0.3s ease;
+    }
+    .btn-google:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 </style>
 </head>
 <body class="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center bg-register">
     <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 backdrop-blur-sm"></div>
 
-<div class="relative z-10 w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 animate-fade-in">
+    <div class="relative z-10 w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 animate-fade-in mx-4">
 
-    <div class="mb-6 text-center">
-    <h1 class="text-3xl font-extrabold text-green-600 drop-shadow-md">Crear Cuenta</h1>
-    <p class="text-sm text-gray-500 mt-1">Registra tu negocio para comenzar a recibir reservas</p>
-    </div>
-
-<form action="{{ url_for('register') }}" method="POST" class="space-y-5">
-    <div>
-        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario:</label>
-        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required
-            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
-    </div>
-
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico:</label>
-        <input type="email" id="email" name="email" placeholder="Correo electrónico" required
-            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
-    </div>
-    
-    <div>
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña:</label>
-        <div class="relative">
-            <input type="password" id="password" name="password" placeholder="Contraseña" required
-                class="pl-12 pr-10 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
-            <i id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500">
-                👁️
-            </i>
+        <div class="mb-6 text-center">
+            <h1 class="text-3xl font-extrabold text-green-600 drop-shadow-md">Crear Cuenta</h1>
+            <p id="message" class="text-sm text-gray-500 mt-1"></p>
         </div>
+
+        <form action="{{ url_for('register') }}" method="POST" class="space-y-5">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" placeholder="Nombre de usuario" required
+                    class="w-full px-4 py-3 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required
+                    class="w-full px-4 py-3 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña:</label>
+                <div class="relative">
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required
+                        class="w-full px-4 py-3 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500" />
+                    <i id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500">
+                        👁️
+                    </i>
+                </div>
+            </div>
+
+            <div>
+                <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Selecciona tu rol:</label>
+                <select id="role" name="role" required
+                    class="w-full px-4 py-3 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="gestor" selected>Gestor(a)</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+            </div>
+
+            <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium text-base">
+                Registrar
+            </button>
+        </form>
+
+        <!-- Separador -->
+        <div class="flex items-center my-6">
+            <div class="flex-1 border-t border-gray-300"></div>
+            <span class="px-3 text-gray-500 text-sm">o</span>
+            <div class="flex-1 border-t border-gray-300"></div>
+        </div>
+
+        <p class="text-sm text-center text-gray-500">
+            ¿Ya tienes una cuenta?
+            <a href="{{ url_for('login') }}" class="text-green-600 hover:underline">Inicia sesión</a>
+        </p>
     </div>
 
-    <div>
-        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Rol:</label>
-        <select id="role" name="role" required
-            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500">
-            <option value="admin" selected>Gestor(a)</option>
-            <option value="cliente">Cliente</option>
-        </select>
-    </div>
+    <script>
+        const toggle = document.getElementById('togglePassword');
+        const password = document.getElementById('password');  
+        toggle.addEventListener('click', () => {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            toggle.classList.toggle('text-gray-400');
+            toggle.classList.toggle('text-green-600');
+        });
 
-    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium text-base">
-        Registrar
-    </button>
-</form>
+        const roleSelect = document.getElementById('role');
+        const messageElement = document.getElementById('message');
 
-    <p class="mt-5 text-sm text-center text-gray-500">
-    ¿Ya tienes una cuenta?
-    <a href="{{ url_for('login') }}" class="text-green-600 hover:underline">Inicia sesión</a>
-    </p>
-</div>
+        function updateMessage() {
+            const role = roleSelect.value;
+            if (role === "gestor") {
+                messageElement.innerText = "Registra tu negocio para comenzar a recibir reservas";
+            } else if (role === "cliente") {
+                messageElement.innerText = "Busca y reserva en los negocios disponibles";
+            }
+        }
+        updateMessage();
 
-<script>
-    const toggle = document.getElementById('togglePassword');
-    const password = document.getElementById('password');  
-    toggle.addEventListener('click', () => {
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        toggle.classList.toggle('text-gray-400');
-        toggle.classList.toggle('text-green-600');
-    });
-
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('error') === 'correo_usado') {
-        alert('El correo ya está registrado. Por favor inicia sesión.');
-    }
-</script>
+        roleSelect.addEventListener('change', updateMessage);
+    </script>
 </body>
 </html>

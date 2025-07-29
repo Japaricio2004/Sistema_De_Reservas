@@ -87,13 +87,21 @@
             <p class="text-lg mt-2 text-gray-200">Tu negocio, tus horarios, tus clientes. Sin llamadas.</p>
         </header>
         <div class="flex flex-col space-y-4 w-full max-w-xs">
-            <!-- Botón para ingresar como negocio -->
-            <a href="{{ url_for('login') }}" class="ripple-btn border border-blue-400 text-white rounded-lg py-3 flex items-center justify-center gap-2">
+            <a href="{{ url_for('login', role='admin') }}" class="ripple-btn border border-blue-400 text-white rounded-lg py-3 flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.347 0 4.548.607 6.498 1.663M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 Ingresar como negocio
             </a>
+
+            <!-- Botón para ingresar como cliente -->
+            <a href="{{ url_for('login', role='cliente') }}" class="ripple-btn border border-gray-400 text-white rounded-lg py-3 flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.347 0 4.548.607 6.498 1.663M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Ingresar como cliente
+            </a>
+
             <!-- Botón para crear cuenta -->
             <a href="{{ url_for('register') }}" class="ripple-btn border border-green-400 text-white rounded-lg py-3 flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

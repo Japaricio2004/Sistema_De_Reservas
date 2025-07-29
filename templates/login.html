@@ -5,74 +5,93 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Login</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
     .bg-login {
-            background-image: url("{{ url_for('static', filename='images/fondo_login.jpg') }}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+        background-image: url("{{ url_for('static', filename='images/fondo_login.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
     @keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
     .animate-fade-in {
-    animation: fade-in 1s ease-out;
+        animation: fade-in 1s ease-out;
+    }
+    .btn-google {
+        transition: all 0.3s ease;
+    }
+    .btn-google:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 </style>
 </head>
 <body class="relative min-h-screen bg-cover bg-center bg-no-repeat bg-login">
     <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 backdrop-blur-sm"></div>
-<div class="relative z-10 flex items-center justify-center min-h-screen px-4">
-    <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md animate-fade-in">
-    <div class="mb-6 text-center">
-        <h1 class="text-3xl font-extrabold text-green-600 drop-shadow-md">Iniciar sesión</h1>
-        <p class="text-sm text-gray-500 mt-1">Ingresa tus credenciales para continuar</p>
-    </div>
-    <form action="{{ url_for('login') }}" method="POST" class="space-y-5">
-    <div class="form-group">
-        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario:</label>
-        <div class="relative">
-            <input type="text" id="username" name="username" placeholder="Nombre de usuario" required
-                class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md animate-fade-in">
+            <div class="mb-6 text-center">
+                <h1 class="text-3xl font-extrabold text-green-600 drop-shadow-md">Iniciar sesión</h1>
+                <p class="text-sm text-gray-500 mt-1">Ingresa tus credenciales para continuar</p>
+            </div>
+            
+            <form action="{{ url_for('login') }}" method="POST" class="space-y-5">
+                <div class="form-group">
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario:</label>
+                    <div class="relative">
+                        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required
+                            class="pl-12 pr-4 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña:</label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" placeholder="Contraseña" required
+                            class="pl-12 pr-10 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <!-- Ícono para mostrar/ocultar la contraseña -->
+                        <i id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500">
+                            👁️
+                        </i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium text-base">
+                    Ingresar
+                </button>
+            </form>
+            
+            <!-- Divider -->
+            <div class="flex items-center my-6">
+                <div class="flex-1 border-t border-gray-300"></div>
+                <span class="px-3 text-gray-500 text-sm">o</span>
+                <div class="flex-1 border-t border-gray-300"></div>
+            </div>
+            
+            <p class="mt-4 text-sm text-center text-gray-500">
+                ¿Olvidaste tu contraseña?
+                <a href="{{ url_for('recuperar') }}" class="text-green-600 hover:underline">Recuperar acceso</a>
+            </p>
+
+            <p class="mt-4 text-sm text-center text-gray-600">
+                ¿No tienes cuenta? <a href="{{ url_for('register') }}" class="text-green-600 hover:underline font-semibold">Regístrate aquí</a>
+            </p>
         </div>
     </div>
-    <div class="form-group">
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña:</label>
-        <div class="relative">
-            <input type="password" id="password" name="password" placeholder="Contraseña" required
-                class="pl-12 pr-10 py-3 w-full border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <!-- Ícono para mostrar/ocultar la contraseña -->
-            <i id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500">
-                👁️
-            </i>
-        </div>
-    </div>
-    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 font-medium text-base">
-        Ingresar
-    </button>
-</form>
-    <p class="mt-4 text-sm text-center text-gray-500">
-        ¿Olvidaste tu contraseña?
-        <a href="recuperar.html" class="text-green-600 hover:underline">Recuperar acceso</a>
-    </p>
 
-    <p class="mt-4 text-sm text-center text-gray-600">
-        ¿No tienes cuenta? <a href="{{ url_for('register') }}" class="text-green-600 hover:underline font-semibold">Regístrate aquí</a>
-    </p>
-    </div>
-</div>
+    <script>
+        const toggle = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
 
-<script>
-    const toggle = document.getElementById('togglePassword');
-    const password = document.getElementById('password');  // Se corrigió el ID aquí para que coincida
-
-    toggle.addEventListener('click', () => {
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    toggle.classList.toggle('text-gray-400');
-    toggle.classList.toggle('text-green-600');
-    });
-</script>
+        toggle.addEventListener('click', () => {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            toggle.classList.toggle('text-gray-400');
+            toggle.classList.toggle('text-green-600');
+        });
+    </script>
 </body>
 </html>
