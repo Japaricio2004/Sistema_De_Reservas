@@ -308,33 +308,3 @@ if __name__ == '__main__':
         db.create_all()
     app.run(debug=True)
 
-@app.route('/perfil_profesor/<int:id>', methods=['GET', 'POST'])
-def perfil_profesor_id(id):
-    profesor = User.query.get_or_404(id)
-
-    if request.method == 'POST':
-        nombre_estudiante = request.form['nombre_estudiante']
-        correo_estudiante = request.form['correo_estudiante']
-        telefono_estudiante = request.form['telefono_estudiante']
-        fecha_reserva = request.form['fecha_reserva']
-        hora_reserva = request.form['hora_reserva']
-        tipo_clase = request.form['tipo_clase']
-
-        nueva_reserva = reservar_clase(
-            nombre_estudiante=nombre_estudiante,
-            correo_estudiante=correo_estudiante,
-            telefono_estudiante=telefono_estudiante,
-            fecha_reserva=fecha_reserva,
-            hora_reserva=hora_reserva,
-            tipo_clase=tipo_clase,
-            profesor_id=profesor.id,  
-            user_id=current_user.id, 
-            estado='pendiente'
-        )
-        db.session.add(nueva_reserva)
-        db.session.commit()
-        flash('Reserva creada exitosamente', 'success')
-        return redirect(url_for('citas_estudiante'))
-
-    return render_template('perfil_profesor.html', profesor=profesor)
-
