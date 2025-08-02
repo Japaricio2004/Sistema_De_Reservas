@@ -27,6 +27,11 @@
             <p class="text-blue-100">Gestiona tus citas programadas</p>
         </div>
 
+        {% if citas or citas_nutricionista %}
+        <form method="POST" action="{{ url_for('borrar_historial') }}" class="mb-6 text-right">
+            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">Borrar historial</button>
+        </form>
+        {% endif %}
         {% if citas %}
         <h2 class="text-2xl font-bold mb-4 text-green-700">Reservas con Profesor</h2>
         <div class="overflow-x-auto rounded-xl border border-gray-200">

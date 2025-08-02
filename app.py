@@ -119,6 +119,16 @@ def citas_profesor():
     return render_template('citas_profesor.html', citas=citas)
 
 
+@app.route('/borrar_historial', methods=['POST'])
+@login_required
+def borrar_historial():
+    # Borrar todas las reservas del usuario actual
+    reservar_clase.query.filter_by(user_id=current_user.id).delete()
+    reserva_nutricionista.query.filter_by(user_id=current_user.id).delete()
+    db.session.commit()
+    flash('Historial de citas borrado exitosamente.', 'info')
+    return redirect(url_for('historial_citas'))
+
 @app.route('/cancelar_cita/<int:id>')
 @login_required
 def cancelar_cita(id):
